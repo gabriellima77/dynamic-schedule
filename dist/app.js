@@ -1,0 +1,15 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+eval("const schedule = document.querySelector('.schedule');\nconst body = document.querySelector('body');\nconst HOURSDAY = 24;\n\nfunction removeEditBox() {\n  const editBox = document.querySelector('.edit-box');\n  if(editBox) body.removeChild(editBox);\n}\n\nfunction editEvent() {\n  removeEditBox();\n  if(this.classList.contains('active')) {\n    this.classList.remove('active');\n    return;\n  }\n  this.classList.add('active');\n  const editBox = document.createElement('div');\n  const editRect = this.getBoundingClientRect();\n  const editBoxHeight = window.innerHeight * 22 / 100;\n  const editBoxWidth = window.innerWidth * 15 / 100;\n  const {top, left} = editRect;\n\n  editBox.classList.add('edit-box');\n\n  editBox.style.top = top - editBoxHeight / 2 + 'px';\n  editBox.style.left = left - editBoxWidth + 'px';\n\n  body.appendChild(editBox);\n}\n\nfunction createSchedule () {\n  for(let i = 0; i < HOURSDAY; i++) {\n    const myDiv = document.createElement('div');\n\n    const myPara = document.createElement('p');\n    const myBox = document.createElement('div');\n\n    const editSpan = document.createElement('span');\n    const removeSpan = document.createElement('span');\n    const myCheck = document.createElement('input');\n\n    myCheck.setAttribute('type', 'checkbox');\n\n    myDiv.classList.add('hour');\n    myPara.classList.add('time');\n    myBox.classList.add('tool-box');\n    editSpan.classList.value = 'far fa-edit edit';\n    removeSpan.classList.value = 'fas fa-times remove';\n    myCheck.classList.add('isDone');\n\n    myPara.textContent = (i < 10)?`0${i}:00`: `${i}:00`;\n\n    editSpan.addEventListener('click', editEvent);\n\n    myBox.appendChild(editSpan);\n    myBox.appendChild(removeSpan);\n    myBox.appendChild(myCheck);\n\n    myDiv.appendChild(myPara);\n    myDiv.appendChild(myBox);\n    \n    schedule.appendChild(myDiv);\n  }\n}\n\ncreateSchedule();\nschedule.addEventListener('scroll', () =>{\n  const hasActiveBox = document.querySelector('.edit.active');\n  if(!hasActiveBox) return;\n  hasActiveBox.classList.remove('active');\n  removeEditBox();\n});\nwindow.onresize = () => removeEditBox();\n\n\n//# sourceURL=webpack://dynamic-schedule/./src/index.js?");
+/******/ })()
+;
