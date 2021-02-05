@@ -10,6 +10,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background-color: black;
 }
 
 .card {
@@ -90,7 +91,11 @@ html, body {
 }
 
 .edit-box {
-  border-radius: .5px 0 0 .5px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-evenly;
+  border-radius: 5px 0 0 5px;
   z-index: 1;
   position: absolute;
   width: 5%;
@@ -101,11 +106,46 @@ html, body {
   animation: bubbleGrows .5s linear forwards;
 }
 
+.confirm {
+  user-select: none;
+  cursor: pointer;
+  margin-left: 5%;
+  display: grid;
+  place-items: center;
+  width: 80%;
+  height: 30px;
+  margin-top: auto;
+  background-color: green;
+}
+
+.points {
+  position: absolute;
+  color: yellow;
+  animation: showPoints .6s forwards linear;
+}
+
+.points.remove {
+  color: red;
+}
+
 @keyframes bubbleGrows {
   0% {
-    transform: scale(1, 1);
+    width: 5%;
+    height: 4%;
   }
   100% {
-    transform: scale(5, 5);
+    width: 25%;
+    height: 20%;
+  }
+}
+
+@keyframes showPoints {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: .2;
+    transform: translateY(-20px);
   }
 }
