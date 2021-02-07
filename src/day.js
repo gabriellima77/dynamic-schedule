@@ -32,7 +32,7 @@ function createDayTag(date) {
   myPara.classList.add('date');
   schedule.classList.add('schedule');
 
-  myH2.textContent = DAYS[date.getDate()];
+  myH2.textContent = DAYS[date.getDay()];
   myPara.textContent = date.toLocaleDateString("en-US");
 
   schedule.addEventListener('scroll', removeEditBox);
@@ -46,6 +46,15 @@ function createDayTag(date) {
   return day;
 }
 
+function  createTasks(day) {
+  for(let i = 0; i < day.Hours; i++) {
+    let newTask = new Task(i);
+    const schedule = day.dayTag.querySelector('.schedule');
+    schedule.appendChild(newTask.taskTag);
+    day.tasks[i] = newTask;
+  }
+}
+
 class Day {
   constructor(date) {
     this.Hours = 24;
@@ -53,16 +62,7 @@ class Day {
     this.date = (date)? new Date(date): new Date();
     this.day = this.date.getDate();
     this.dayTag = createDayTag(this.date);
-    this.getTasks();
-  }
-
-  getTasks() {
-    for(let i = 0; i < this.Hours; i++) {
-      let newTask = new Task(i);
-      const schedule = this.dayTag.querySelector('.schedule');
-      schedule.appendChild(newTask.taskTag);
-      this.tasks[i] = newTask;
-    }
+    createTasks(this);
   }
 }
 

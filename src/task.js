@@ -1,6 +1,8 @@
 const PRIORITYOPTIONS = ['Low', 'Medium', 'High'];
 const PRIORITYPTS = [5, 10, 30];
 const body = document.querySelector('body');
+const sideBar = document.querySelector('.side-bar');
+const pointsTag = document.querySelector('.pts');
 
 function removeEditBox() {
   const editBox = document.querySelector('.edit-box');
@@ -11,36 +13,42 @@ function removeEvent(task) {
   const myH3 = task.taskTag.querySelector('h3');
 
   task.setName = '';
-  task.setPriority = '';
+  task.setPriority = 'Low';
+  task.isTask = false;
 
   myH3.textContent = '';
 }
 
 function removePara() {
-  body.removeChild(this);
+  sideBar.removeChild(this);
 }
 
 function addPoints(task) {
   const myPara = document.createElement('p');
-  myPara.textContent = PRIORITYPTS[PRIORITYOPTIONS.indexOf(task.priority)] + 'pts';
+  const top = pointsTag.offsetTop;
+  const height = pointsTag.offsetHeight;
+  myPara.textContent = '+' + PRIORITYPTS[PRIORITYOPTIONS.indexOf(task.priority)] + 'pts';
   myPara.classList.add('points');
+  myPara.style.top = top - height + 'px';
   myPara.addEventListener('animationend', removePara);
-  body.appendChild(myPara);
+  sideBar.appendChild(myPara);
 }
 
 function removePoints(task) {
   const myPara = document.createElement('p');
+  const top = pointsTag.offsetTop;
+  const height = pointsTag.offsetHeight;
   myPara.textContent = -PRIORITYPTS[PRIORITYOPTIONS.indexOf(task.priority)] + 'pts';
   myPara.classList.value = 'points remove';
+  myPara.style.top = top - height + 'px';
   myPara.addEventListener('animationend', removePara);
-  body.appendChild(myPara);
+  sideBar.appendChild(myPara);
 }
 
 function checkEvent(task) {
   task.isChecked = this.checked;
-  if(this.checked) addPoints(task);
-  else removePoints(task);
-  console.log(task);
+  if(this.checked && task.isTask) addPoints(task);
+  else if(task.isTask) removePoints(task);
 }
 
 function changeTask(task) {
@@ -52,6 +60,7 @@ function changeTask(task) {
 
   task.setName = title;
   task.setPriority = priority;
+  task.isTask = true;
 
   myH3.textContent = title;
   
@@ -167,6 +176,7 @@ class Task {
     this.isDaily = false;
     this.isChecked = false;
     this.taskTag = createTaskTag(this);
+    this.isTask = false;
     this.priority = 'Low';
   }
   
