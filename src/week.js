@@ -34,13 +34,27 @@ function createTableHeader(week) {
   return tHead
 }
 
-function createTableBody() {
-
+function createTableBody(week) {
+  const tBody = document.createElement('tbody');
+  const tasks = [];
+  const hours = Array(24);
+  week.days.forEach((day) => {
+    tasks.push(day.tasks.filter((task) => (task.isTask)));
+  });
+  tasks.forEach((taskList) => {
+    taskList.forEach((task) => {
+      if(!hours[task.time]) hours[task.time] = [{title: task.name, priority: task.priority}];
+      else hours[task.time].push({title: task.name, priority: task.priority});
+    });
+  });
+  console.log(hours);
+  return tBody;
 }
 
 function makeTable(week) {
   const table = document.createElement('table');
   table.appendChild(createTableHeader(week));
+  createTableBody(week);
   return table;
 }
 
