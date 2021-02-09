@@ -46,9 +46,9 @@ function createDayTag(date) {
   return day;
 }
 
-function  createTasks(day) {
+function  createTasks(day, week) {
   for(let i = 0; i < day.Hours; i++) {
-    let newTask = new Task(i);
+    let newTask = new Task(i, week);
     const schedule = day.dayTag.querySelector('.schedule');
     schedule.appendChild(newTask.taskTag);
     day.tasks[i] = newTask;
@@ -56,13 +56,14 @@ function  createTasks(day) {
 }
 
 class Day {
-  constructor(date) {
+  constructor(date, week) {
     this.Hours = 24;
     this.tasks = [];
     this.date = (date)? new Date(date): new Date();
     this.day = this.date.getDate();
     this.dayTag = createDayTag(this.date);
-    createTasks(this);
+    this.weekReference = week;
+    createTasks(this, this.weekReference);
   }
 }
 

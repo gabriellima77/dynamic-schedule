@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
+
+:root {
+  --bar: #6B7FD7;
+  --background: #ebebeb;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,6 +19,7 @@ body {
   align-items: center;
   width: 100vw;
   height: 100vh;
+  background-color: #4C2A85;
 }
 
 .container {
@@ -20,17 +30,43 @@ body {
   height: 100%;
 }
 
+.box {
+  border-radius: 5px;
+  background-color: var(--bar);
+  padding: 5px 0 2px 0;
+}
+
 table {
-  border: 1px solid black;
   border-collapse: collapse;
+  font-family: 'Roboto', sans-serif;
+}
+
+tr {
+  border-bottom: 1px solid #aaaaaa;
+}
+
+thead tr {
+  border-bottom: none;
 }
 
 th,
 td {
-  border: 1px solid black;
-  width: 80px;
+  text-align: center;
+  width: 120px;
+  max-width: 120px;
   height: 30px;
   margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+td:nth-child(odd) {
+  background-color: #d8d8d8;
+  filter: brightness(90%);
+}
+
+tbody {
+  background-color: #eeeeee;
 }
 
 .side-bar {
@@ -41,24 +77,27 @@ td {
   margin-left: auto;
   width: 20vw;
   height: 100vh;
-  background-color: aqua;
+  background-color: var(--background);
 }
 
 .user-name {
   margin-top: auto;
+  font-family: 'Roboto', sans-serif;
 }
 
 .pts {
   margin-top: 1rem;
   margin-bottom: auto;
+  font-family: 'Carter One', cursive;
 }
 
 .btn {
   margin-bottom: 2%;
   width: 80%;
   height: 8%;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: bold;
+  font-family: 'Hammersmith One', sans-serif;
   cursor: pointer;
   background: none;
   border: none;
@@ -75,24 +114,36 @@ td {
   justify-content: center;
   width: 50%;
   height: 80vh;
-  background-color: red;
+  background-color: var(--bar);
 }
 
 .date-box {
   position: absolute;
-  top: 2.5%;
+  top: 2%;
   display: inline-flex;
   align-items: center;
-  background-color: white;
+}
+
+.date-box .day {
+  font-family: 'Hammersmith One', sans-serif;
+  margin-right: 10px;
+}
+
+.date-box .date {
+  font-family: 'Roboto', sans-serif;
+  margin-top: auto;
+  font-size: .8rem;
+  color: #444444;
 }
 
 .schedule {
+  font-family: 'Roboto', sans-serif;
   overflow: auto;
   border-radius: 0 0 10px 10px;
   margin-top: 7%;
   width: 99%;
   height: 90%;
-  background-color: #ebebeb;
+  background-color: var(--background);
 }
 
 .schedule::-webkit-scrollbar {
@@ -116,13 +167,12 @@ td {
   width: 100%;
 }
 
-.grab {
-  color: #858585;
-  cursor: pointer;
-}
-
 .time {
   margin-left: 5%;
+}
+
+.task-title {
+  margin: 0 auto;
 }
 
 .tool-box {
@@ -133,6 +183,7 @@ td {
   align-items: center;
   justify-content: space-evenly;
 }
+
 
 .remove {
   cursor: pointer;
@@ -172,6 +223,7 @@ td {
 }
 
 .points {
+  font-family: 'Carter One', cursive;
   position: absolute;
   color: rgb(62, 218, 0);
   animation: showPoints 0.6s forwards linear;
@@ -179,6 +231,12 @@ td {
 
 .points.remove {
   color: red;
+}
+
+.download {
+  position: absolute;
+  height: 30px;
+  bottom: 5%;
 }
 
 @keyframes bubbleGrows {

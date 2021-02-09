@@ -1,5 +1,11 @@
 import Day from './day';
 
+const PRIORITYCOLORS = {
+  Low: '#42ffca',
+  Medium: '#7bff42',
+  High: '#ffc942'
+}
+
 const today = new Date();
 
 function makeDays(week) {
@@ -10,7 +16,7 @@ function makeDays(week) {
   let dateDay = date - day;
   for(let i = 0; i < 7; i++){
     const newDate = new Date(year, month, dateDay);
-    const newDay = new Day(newDate);
+    const newDay = new Day(newDate, week);
     week.days.push(newDay);
     dateDay++;
   }
@@ -34,28 +40,59 @@ function createTableHeader(week) {
   return tHead
 }
 
-function createTableBody(week) {
-  const tBody = document.createElement('tbody');
+function getHours(week) {
   const tasks = [];
   const hours = Array(24);
   week.days.forEach((day) => {
-    tasks.push(day.tasks.filter((task) => (task.isTask)));
+    tasks.push(day.tasks.filter((task) => (task.hasTask)));
   });
-  tasks.forEach((taskList) => {
+  tasks.forEach((taskList, index) => {
     taskList.forEach((task) => {
-      if(!hours[task.time]) hours[task.time] = [{title: task.name, priority: task.priority}];
-      else hours[task.time].push({title: task.name, priority: task.priority});
+      if(!hours[task.time]) {
+        hours[task.time] = Array(7);
+        hours[task.time][index] = {title: task.name, priority: task.priority};
+      }
+      else hours[task.time][index] = {title: task.name, priority: task.priority};
     });
   });
+  return hours;
+}
+
+function createTableBody(week) {
+  const tBody = document.createElement('tbody');
+  const hours = getHours(week);
   console.log(hours);
+  hours.forEach((hour, index) => {
+    if(hour) {
+      const tR = document.createElement('tr');
+      const timeTD = document.createElement('td');
+      timeTD.textContent = (index > 9)? `${index}:00`: `0${index}:00`;
+      tR.appendChild(timeTD);
+      for(let i = 0; i < 7; i++) {
+        const tD = document.createElement('td');
+        if(hour[i]) {
+          tD.textContent = hour[i].title;
+          tD.style.backgroundColor = PRIORITYCOLORS[hour[i].priority];
+        }
+        tR.appendChild(tD);
+      }
+      tBody.appendChild(tR);
+    }
+  });
   return tBody;
 }
 
 function makeTable(week) {
+  const box = document.createElement('div');
   const table = document.createElement('table');
+
+  box.classList.add('box');
+
+
   table.appendChild(createTableHeader(week));
-  createTableBody(week);
-  return table;
+  table.appendChild(createTableBody(week));
+  box.appendChild(table);
+  return box;
 }
 
 class Week {

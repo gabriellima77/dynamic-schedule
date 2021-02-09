@@ -1,8 +1,7 @@
 import Week from './week';
-
+import { jsPDF } from "jspdf";
 
 (function(){
-  let userPts = 0;
   const btns = document.querySelectorAll('.btn.day');
   const todayBtn = document.querySelector('.today');
   const weekBtn = document.querySelector('.week');
@@ -12,7 +11,9 @@ import Week from './week';
   const container = document.querySelector('.container');
 
   function start() {
+    const ptsTag = document.querySelector('.pts');
     const myDay = week.days.find((day) => (day.date.getDay() === today.getDay()));
+    // ptsTag.textContent = userPts + 'pts';
     container.appendChild(myDay.dayTag);
   }
 
@@ -26,6 +27,23 @@ import Week from './week';
     const day = week.getDayByName(name);
     cleanContainer();
     container.appendChild(day.dayTag);
+  }
+
+  function downloadPDF() {
+    const box = document.querySelector('.box');
+    const doc = new jsPDF({
+      orientation: "landscape",
+      unit: 'px',
+      hotfixes: ["px_scaling"],
+      format: 'a4'
+    });
+    doc.html(box, {
+      callback: function (doc) {
+        doc.save('schedule.pdf');
+      },
+      x: 81,
+      y: 200
+   });
   }
 
   window.onresize = function removeEditBox () {
@@ -42,8 +60,15 @@ import Week from './week';
     start();
   });
   weekBtn.addEventListener('click', function weekEvent() {
+    const downloadBtn = document.createElement('button');
+
+    downloadBtn.addEventListener('click', downloadPDF);
+    downloadBtn.classList.add('download');
+    downloadBtn.textContent = 'Download';
+    
     cleanContainer();
     container.appendChild(week.getTable);
+    container.appendChild(downloadBtn);
   });
   start();
 })()
