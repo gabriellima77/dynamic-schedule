@@ -234,9 +234,19 @@ tbody {
 }
 
 .download {
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: row-reverse;
+  padding: 0 5px;
+  align-items: center;
   position: absolute;
   height: 30px;
   bottom: 5%;
+}
+
+.download-icon {
+  margin-right: 5px;
+  font-size: 20px;
 }
 
 @keyframes bubbleGrows {

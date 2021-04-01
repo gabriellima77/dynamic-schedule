@@ -61,7 +61,6 @@ function getHours(week) {
 function createTableBody(week) {
   const tBody = document.createElement('tbody');
   const hours = getHours(week);
-  console.log(hours);
   hours.forEach((hour, index) => {
     if(hour) {
       const tR = document.createElement('tr');

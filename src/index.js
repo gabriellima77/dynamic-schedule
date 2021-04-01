@@ -61,11 +61,15 @@ import { jsPDF } from "jspdf";
   });
   weekBtn.addEventListener('click', function weekEvent() {
     const downloadBtn = document.createElement('button');
+    const icon = document.createElement('i');
 
-    downloadBtn.addEventListener('click', downloadPDF);
     downloadBtn.classList.add('download');
-    downloadBtn.textContent = 'Download';
-    
+    icon.classList.value = 'fas fa-file-download download-icon';
+
+    downloadBtn.textContent = 'Download Pdf';
+    downloadBtn.appendChild(icon);
+    downloadBtn.addEventListener('click', downloadPDF);
+
     cleanContainer();
     container.appendChild(week.getTable);
     container.appendChild(downloadBtn);
